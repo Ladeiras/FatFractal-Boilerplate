@@ -35,6 +35,7 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 
 # Custom
+FatFractal_Runtime/
 package-lock.json
 ff-generated/
 pid.file
