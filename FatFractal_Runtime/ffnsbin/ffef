@@ -1,0 +1,32 @@
+#!/bin/bash
+
+FFEF_APP_DIR=`pwd`
+FFEF_BIN_DIR=`dirname $0`
+
+pushd $FFEF_BIN_DIR > /dev/null 2>&1
+FFEF_BIN_DIR=`pwd`
+popd > /dev/null 2>&1
+
+jarFile="`ls $FFEF_BIN_DIR/../lib/fatfractal-desktop-deployer-*.jar`"
+
+case "`uname`" in
+    CYGWIN*)
+        jarFile="`cygpath -w $jarFile`"
+        FFEF_BIN_DIR="`cygpath -w $FFEF_BIN_DIR`"
+        FFEF_APP_DIR="`cygpath -w $FFEF_APP_DIR`"
+        ;;
+esac
+
+if [ -z "$FF_FABRIC_DOMAIN" ]; then
+    FF_FABRIC_DOMAIN=fatfractal.com
+fi
+
+export FF_FABRIC_DOMAIN=$FF_FABRIC_DOMAIN
+
+java "-Dcom.fatfractal.deployer.FFEF_BIN_DIR=$FFEF_BIN_DIR" \
+     "-Dcom.fatfractal.deployer.FFEF_APP_DIR=$FFEF_APP_DIR" \
+     "-Dhttp.base.uri=http://system.$FF_FABRIC_DOMAIN" \
+     "-Dhttps.base.uri=https://system.$FF_FABRIC_DOMAIN" \
+     "-Dtrusted.host=system.$FF_FABRIC_DOMAIN" \
+     -jar $jarFile \
+     $*

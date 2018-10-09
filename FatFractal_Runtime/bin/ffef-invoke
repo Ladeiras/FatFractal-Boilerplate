@@ -1,0 +1,25 @@
+#!/bin/sh
+cygwin=false
+case "`uname`" in
+CYGWIN*) cygwin=true ;;                             
+esac
+if $cygwin ; then 
+FFNSBIN=`cygpath --unix "$1"`
+else
+FFNSBIN=$1
+fi
+export PATH="$PATH:$FFNSBIN"
+if [ $# == 3 ]; then
+cp $FFNSBIN/template.application.ffdl .
+cp $FFNSBIN/template.context.xml .
+cp $FFNSBIN/template.fatfractal.xml .
+cp $FFNSBIN/template.index.html .
+bash -x ffef "newapp" "$2" "$3"
+rm -f "template.application.ffdl"
+rm -f "template.context.xml"
+rm -f "template.fatfractal.xml"
+rm -f "template.index.html"
+else
+bash -x ffef "deploylocal"
+fi
+exit $?

@@ -1,0 +1,20 @@
+{
+  "name": "boilerplate",
+  "version": "0.0.1",
+  "author": "Cambridge Digital Health",
+  "private": true,
+  "scripts": {
+    "install": "./scripts/ff.sh install",
+    "reinstall": "./scripts/ff.sh reinstall",
+    "start": "./scripts/ff.sh start",
+    "restart": "./scripts/ff.sh restart",
+    "stop": "./scripts/ff.sh stop",
+    "deploy": "./scripts/ff.sh deploy",
+    "production": "./scripts/ff.sh production",
+    "watch": "./scripts/ff.sh watch",
+    "debug": "./scripts/ff.sh debug"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "description": "TODO"
+}

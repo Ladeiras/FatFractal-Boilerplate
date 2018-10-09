@@ -1,0 +1,88 @@
+#
+# Application configuration
+#
+SET ActivateUsersOnReg false
+SET AllowAnonymousGets true
+SET AllowAutoRegistration false
+SET_PRIVATE AllowDeleteByQuery false
+SET AllowInactiveGets true
+SET_PRIVATE AllowInsecureAuth true
+SET AllowNewCollections false
+SET AllowNewMembers true
+SET AllowNewObjectTypes false
+SET_PRIVATE AllowSystemUserToLogin true
+SET_PRIVATE AndroidPushAuthToken YOUR_ANDROID_AUTH_TOKEN_GOES_HERE
+SET_PRIVATE ApplePushKeystorePassword YOUR_KEYSTORE_PASSWORD_GOES_HERE
+SET ApplePushUsingProduction false
+SET_PRIVATE BlockDuplicateRequests false
+SET CORS https://system.fatfractal.com
+SET CachableCollections NONE
+SET CachingEnabled true
+SET_PRIVATE DuplicateRequestWindowRequests 50
+SET_PRIVATE DuplicateRequestWindowSeconds 60
+SET ETaggingEnabled true
+SET_PRIVATE ExecuteGetHandlersServerSide true
+SET LogLevel INFO
+SET LogToDatabase false
+SET MaintainCreatedUpdatedBackReferences false
+SET MaxCacheSize 10000
+SET MaxEventRecursionDepth 3
+SET MaxResultsCount 20000
+SET_PRIVATE OpaqueSecret Purple canaries drinking Bloody Mary's
+SET PasswordMessage Password must be between 8 and 50 characters long, must contain at least one digit, at least one lowercase letter and at least one uppercase letter
+SET PasswordPattern ((?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,50})
+SET PasswordValidation false
+SET ProtectMetaData false
+SET PushIsInactive true
+SET ReferentialIntegrityActionOnDelete NONE
+SET SessionTimeoutInSeconds 129600
+SET UseStrictValidation false
+
+#
+# Object Types
+#
+CREATE OBJECTTYPE FFUser VERSION 1 (userName STRING, firstName STRING, lastName STRING, email STRING, active BOOLEAN, authDomain STRING, scriptAuthService STRING, groups GRABBAG /FFUserGroup, notif_ids GRABBAG /FFNotificationID)
+CREATE ALIAS ON OBJECTTYPE FFUser GRABBAG BackReferences.FFUserGroup.users AS memberOfGroups
+CREATE OBJECTTYPE FFUserGroup VERSION 1 (groupName STRING, users GRABBAG /FFUser)
+CREATE OBJECTTYPE FFNotificationID VERSION 1 (idType STRING, idValue STRING)
+CREATE OBJECTTYPE AppUser VERSION 1 (ffUser REFERENCE /FFUser, dob DATE, settings MAP)
+
+#
+# Collection Resources
+#
+CREATE COLLECTION /FFUser OBJECTTYPE FFUser
+PERMIT read:none write:none ON /FFUser
+
+CREATE COLLECTION /FFUserGroup OBJECTTYPE FFUserGroup
+
+CREATE COLLECTION /FFNotificationID OBJECTTYPE FFNotificationID
+
+CREATE COLLECTION /AppUser OBJECTTYPE AppUser
+
+
+#
+# Extension Resources
+#
+CREATE EXTENSION /Populate UNSECURED AS javascript:require('scripts/extensions').populate()
+CREATE EXTENSION /Register UNSECURED AS javascript:require('scripts/extensions').register()
+
+#
+# Scheduled Tasks
+#
+
+#
+# Login Handlers
+#
+
+#
+# Logout Handlers
+#
+
+#
+# Intercept_Pre Handlers
+#
+
+#
+# Intercept_Post Handlers
+#
+
