@@ -9,6 +9,8 @@
 2. `> npm start`
 3. Call `http://localhost:8080/boilerplate/populate` on browser or curl
 4. Auth can now be made with `admin`, `johndoe` or `clinician` by default (same pw as user)
+## Configuration
+Edit `ff-config/application.ffdl` file ([Documentation](http://fatfractal.com/v2/documentation/#document-noserver-ffdl-overview))
 ## Deploy Local
 ```bash
 npm run deploy
